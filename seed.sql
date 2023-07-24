@@ -24,3 +24,20 @@ VAlUES
   ('Account Manager', 82000, 5),
   ('Lawyer', 350000, 6),
   ('Legal Advisor', 150000, 6);
+
+INSERT INTO employees (first_name, last_name, roles_id, manager_id)
+VALUES
+
+  ('Robert', 'Johnson', 1, NULL),
+  ('Jim', 'Morrison', 1, NULL),
+  ('Ron', 'McKernan', 2, 1),
+  ('Amy', 'Whinehouse', 2, 2),
+  ('Richey', 'Edwards', 3, 1),
+  ('Janis', 'Joplin', 3, 3),
+  ('Brian', 'Jones', 4, 2),
+  ('Kristen', 'Pfaff', 4, 2),
+  ('Pete', 'Ham', 5, 1),
+  ('Jimi', 'Hendrix', 5, 2),
+  ('Jonathan', 'Brandis', 6, 3),
+  ('Kurt', 'Cobain', 6, 1),
+  ('Anton', 'Yelchin', 3, 2);
