@@ -1,0 +1,24 @@
+{
+  "name": "employee-tracker_on-command",
+  "version": "1.0.0",
+  "description": "employee tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Firene11/employee-tracker-on-command.git"
+  },
+  "author": "Farrah Norrad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Firene11/employee-tracker-on-command/issues"
+  },
+  "homepage": "https://github.com/Firene11/employee-tracker-on-command#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "mysql2": "^3.5.2"
+  }
+}
