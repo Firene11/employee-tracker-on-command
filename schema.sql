@@ -6,12 +6,12 @@ USE employee_db;
 
 CREATE TABLE department (
     id int auto_increment primary key,
-    department_name varchar(100) not null
+    department_name varchar(30) not null
 );
 
 CREATE TABLE roles (
     id int auto_increment primary key,
-    title varchar(100) not null,
+    title varchar(30) not null,
     salary decimal not null,
     index idx_salary (salary),
     department_id int not null,
@@ -25,5 +25,6 @@ CREATE TABLE employees (
     roles_id int not null,
     manager_id int null,
     foreign key (roles_id) references roles(id),
-    foreign key (manager_id) references employees(id)
+    foreign key (manager_id) references employees(id),
+    on delete set null
 );
