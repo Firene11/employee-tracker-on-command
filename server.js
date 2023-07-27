@@ -1,6 +1,8 @@
 const express = require('express');
+const inquirer = require('inquirer');
 const mysql = require('mysql2');
 require('dotenv').config();
+cTable = require('console.table');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -14,16 +16,16 @@ const db = mysql.createConnection(
     {
         host: 'localhost',
         user: 'root',
-        password: process.env.password,
+        password: 'M1dge_6291181',
         database: 'employee_db'
     },
-    console.log('Connected to the employee_db database.')
+    console.log('--- You are connected to the employee_db database!!! ---')
 );
 
-// Query database
-db.query('SELECT * FROM employees', function (err, results) {
-    console.log(results);
-});
+// Query database example
+//db.query('SELECT * FROM department', function (err, results) {
+//    console.log(results);
+//});
 
 // Default response for any other request (Not Found)
 app.use((req, res) => {
@@ -33,3 +35,24 @@ app.use((req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on port: ${PORT}`);
 });
+
+
+    inquirer
+    .prompt({
+        type: "list",
+        name: "options",
+        message: "WHAT WOULD YOU LIKE TO DO?",
+        choices:
+        [
+            "View all departments",
+            "View all roles",
+            "View all employees",
+            "Add a department",
+            "Add a role",
+            "Add an employee",
+            "Update an employee role",
+        ]
+    })
+
+//function to give answers
+    
