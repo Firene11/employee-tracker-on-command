@@ -36,7 +36,9 @@ app.listen(PORT, () => {
     console.log(`Server running on port: ${PORT}`);
 });
 
+init();
 
+    function init() {
     inquirer
     .prompt({
         type: "list",
@@ -53,6 +55,7 @@ app.listen(PORT, () => {
             "Update an employee role",
         ]
     })
+};
 
 //function to give answers
     
