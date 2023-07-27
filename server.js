@@ -57,6 +57,10 @@ init();
         if (answers.options === "View all departments") {
             viewDepts();
           }
+          else if (answers.options === "View all roles") {
+            viewRoles();
+          }
+    
     })
     
 };
@@ -77,6 +81,23 @@ function viewDepts() {
 }
 
 // Creat function to view all roles - viewRoles
+
+/* SELECT column_name(s)
+FROM table1
+INNER JOIN table2
+ON table1.column_name = table2.column_name; 
+*/
+
+function viewRoles() {
+    db.query('SELECT * FROM roles INNER JOIN department ON roles.id = department.id', function (err, results) {
+        console.table(results);
+        // start again
+        init();
+    });
+}
+//job title, role id, the department that role belongs to, .......and the salary for that role
+
+
 
 // Create function to view all employees - viewEmployees
 
