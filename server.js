@@ -57,5 +57,23 @@ init();
     })
 };
 
-//function to give answers
+//create and call a function to give answers, this should include if else statements
+
+
+
+
+// Create function to view all departments - viewDepts
+
+// Creat function to view all roles - viewRoles
+
+// Create function to view all employees - viewEmployees
+
+// Create function to add a department - addDept
+
+// Create function to add a role - addRole
+
+// Create a function to add an employee - addEmployee
+
+// Create a function to update an employee role - updateRole
+
     
