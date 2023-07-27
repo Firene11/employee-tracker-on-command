@@ -22,11 +22,6 @@ const db = mysql.createConnection(
     console.log('--- You are connected to the employee_db database!!! ---')
 );
 
-// Query database example
-//db.query('SELECT * FROM department', function (err, results) {
-//    console.log(results);
-//});
-
 // Default response for any other request (Not Found)
 app.use((req, res) => {
     res.status(404).end();
@@ -55,14 +50,31 @@ init();
             "Update an employee role",
         ]
     })
+
+//create and call a function to give answers, should include if else statements    
+    .then(function(answers) {
+        console.log(answers);
+        if (answers.options === "View all departments") {
+            viewDepts();
+          }
+    })
+    
 };
 
-//create and call a function to give answers, this should include if else statements
-
-
-
+/* Query database example
+db.query('SELECT * FROM department', function (err, results) {
+    console.log(results);
+}); */
 
 // Create function to view all departments - viewDepts
+
+function viewDepts() {
+    db.query('SELECT * FROM department', function (err, results) {
+        console.table(results);
+        // start again
+        init();
+    });
+}
 
 // Creat function to view all roles - viewRoles
 
