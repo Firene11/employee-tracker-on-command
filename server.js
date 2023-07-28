@@ -229,13 +229,13 @@ function addEmployee() {
     ]).then(function(employee) {
         var roleID ;
         for (let i = 0; i < role_choice.length; i++) {
-            if (employee.role == role_choice[i]) {
+            if (employee.role == role_choice[i].value) {
                 roleID = role_choice[i].key 
             }
         }
         var manID ;
         for (let i = 0; i < manager_choice.length; i++) {
-            if (employee.manager == manager_choice[i]) {
+            if (employee.manager == manager_choice[i].value) {
                 manID = manager_choice[i].key 
             }
         }
