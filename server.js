@@ -226,7 +226,7 @@ function addEmployee() {
     ]).then(function(employee) {
         const query = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${employee.first}', '${employee.last}', '${employee.role}', '${employee.manager}')`
         db.query(query, function(err, res) {
-            console.log('\x1b[41m%s\x1b[1m', `NEW EMPLOYEE ADDED! ${employee.first} ${employee.last}`)
+            console.log('\x1b[41m%s\x1b[1m', `NEW EMPLOYEE ADDED! ${employee.first} ${employee.last} ${employee.role} ${employee.manager}`)
         });
         // start again
         init();
