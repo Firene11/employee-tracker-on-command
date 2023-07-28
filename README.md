@@ -28,7 +28,7 @@ Choose an option from the list to view specific information from the employee da
 
 **Watch this VIDEO to see how the app runs!**
 
-[Link to Video](https://drive.google.com/file/d/14Oaowj3uehFyVMunK8R03o3p-Jemd3tI/view)
+[Link to Video](https://drive.google.com/file/d/136DWxTtPWqYXZx6ZROdv-oL2wuBjAHh_/view)
 
 ## Screenshots
 
