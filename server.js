@@ -286,6 +286,8 @@ function updateRole() {
         }
     });
 
+    db.query('SELECT * FROM employees', function (err, data) {
+        if (err) throw (err);
 
         inquirer
         .prompt([
