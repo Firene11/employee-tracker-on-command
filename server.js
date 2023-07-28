@@ -50,6 +50,7 @@ init();
             "Add a role",
             "Add an employee",
             "Update an employee role",
+            "Exit"
         ]
     })
 
@@ -83,6 +84,10 @@ init();
         else if  (answers.options === "Update an employee role") {
             console.log("\x1b[41m%s\x1b[1m", "YOU ARE UPDATING AN EMPLOYEE'S ROLE!");
             updateRole();
+        }
+        else if (answers.options === "Exit") {
+            console.log("\x1b[41m%s\x1b[1m", "YOU HAVE EXITED THE DATABASE!");
+            process.exit();
         }
     })   
 };
@@ -260,7 +265,7 @@ function addEmployee() {
 
 function updateRole() {
     const employeeList = [];
-    db.query('SELECT first_name, last_name FROM employees', function (err, data) {
+    db.query('SELECT * FROM employees', function (err, data) {
         if (err) {
             console.error(err);
         } else {
@@ -281,8 +286,6 @@ function updateRole() {
         }
     });
 
-    db.query('SELECT * FROM employees', function (err, data) {
-        if (err) throw (err);
 
         inquirer
         .prompt([
@@ -299,7 +302,7 @@ function updateRole() {
                 choices: roleList
             }
         ]).then(function(update) {
-            const query = 'UPDATE employees SET role_id  = ${update.roleList} WHERE id = ${update.name}'
+            const query = 'UPDATE employees SET role_id = ${update.roleList} WHERE first_name = ${update.name}'
             db.query(query, function(err, res) {
                 console.log('\x1b[41m%s\x1b[1m', `YOU'VE UPDATED AN EMPLOYEE'S ROLE! ${update.name}`)
             });
