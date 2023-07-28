@@ -78,6 +78,10 @@ init();
             console.log("\x1b[41m%s\x1b[1m", "YOU ARE ADDING AN EMPLOYEE!");
             addEmployee();
         }
+        else if  (answers.options === "Update an employee role") {
+            console.log("\x1b[41m%s\x1b[1m", "YOU ARE UPDATING AN EMPLOYEE'S ROLE!");
+            updateRole();
+        }
     
     })
     
@@ -177,10 +181,6 @@ function addRole() {
 }
 
 // Create a function to add an employee - addEmployee
-/*WHEN I choose to add an employee
-THEN I am prompted to enter the employee’s first name, last name, role, and manager, 
-and that employee is added to the database
- */
 
 function addEmployee() {
     const role_choice = [];
@@ -238,5 +238,49 @@ function addEmployee() {
 }
 
 // Create a function to update an employee role - updateRole
+/* I am prompted to select an employee to update and their new role and this information is updated 
+in the database 
+ */
 
+function updateRole() {
+
+    //call employee list from db
+
+    //call role list from db
+
+    db.query('SELECT * FROM employees', function (err, data) {
+        if (err) throw (err);
+
+        inquirer
+        .prompt([
+            {
+                type: "list",
+                name: "name",
+                message: "Choose employee",
+                choices: employeeList
+            }, 
+            {
+                type: "list",
+                name: "role",
+                message: "What is the employee's new role?",
+                choices: roleList
+            }
+        ]).then(function(update) {
+            const query = 'UPDATE employees SET role_id WHERE '
+        })
+    })
+
+}
+
+
+/*
+    ]).then(function(employee) {
+        const query = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${employee.first}','${employee.last}', '${employee.role}', '${employee.manager}')`
+        db.query(query, function(err, res) {
+            console.log('\x1b[41m%s\x1b[1m', `NEW EMPLOYEE ADDED! ${employee.first} ${employee.last}`)
+        });
+        init();
+    })
+}
+*/
     
