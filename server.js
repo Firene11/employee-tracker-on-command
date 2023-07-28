@@ -132,21 +132,6 @@ function addDept() {
     });
     };
 
-    /*app.post('/add_department', (req, res) => {
-  const departmentName = req.body.department_name;
-
-  const sql = 'INSERT INTO departments (department_name) VALUES (?)';
-  connection.query(sql, [departmentName], (err, result) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Error adding the department.');
-    } else {
-      console.log('Department added successfully!');
-      res.send('Department added successfully!');
-    }
-  });
-}); */
-
 // Create function to add a role - addRole
 
 // Create a function to add an employee - addEmployee

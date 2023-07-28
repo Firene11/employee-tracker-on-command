@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Firene11/employee-tracker-on-command#readme",
   "dependencies": {
+    "console.table": "^0.10.0",
     "dotenv": "^16.3.1",
     "inquirer": "^8.2.4",
     "mysql2": "^3.5.2"
