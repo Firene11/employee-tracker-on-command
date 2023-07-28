@@ -19,7 +19,7 @@ const db = mysql.createConnection(
         password: 'M1dge_6291181',
         database: 'employee_db'
     },
-    console.log('--- You are connected to the employee_db database!!! ---')
+    console.log('\x1b[7m', '--- You are connected to the employee_db database!!! ---')
 );
 
 // Default response for any other request (Not Found)
@@ -68,8 +68,11 @@ init();
         }
         else if (answers.options === "Add a department") {
             console.log("\x1b[41m%s\x1b[1m", "YOU ARE ADDING A DEPARTMENT!");
-            addDept();
-            
+            addDept(); 
+        }
+        else if  (answers.options === "Add a role") {
+            console.log("\x1b[41m%s\x1b[1m", "YOU ARE ADDING A ROLE!");
+            addRole();
         }
     
     })
@@ -112,9 +115,6 @@ function viewEmployees() {
 }
 
 // Create function to add a department - addDept
-/* WHEN I choose to add a department THEN I am prompted to enter the name of the department 
-and that department is added to the database
- */
 
 function addDept() {
     inquirer.prompt([
@@ -126,13 +126,54 @@ function addDept() {
     ]).then(function(deptChoice) {
         const query = `INSERT INTO department (department_name) VALUES ('${deptChoice.add_dept}')`;
         db.query(query, function(err, res) {
-        console.log(`NEW DEPARTMENT ADDED! ${answer.add_dept}-------`)
+        console.log(`NEW DEPARTMENT ADDED! ${deptChoice.add_dept}`)
         });
         init();
     });
     };
 
 // Create function to add a role - addRole
+/* enter the name, salary, and department for the role and that role is added to the database
+*/
+
+function addRole() {
+    const dept_choice = [];
+    db.query('SELECT department_name FROM department', function (err, data) {
+        if (err) {
+            console.error(err);
+        } else {
+            data.forEach((row) => {
+                dept_choice.push(row.department_name);
+            })
+        }
+    });
+
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "add_role",
+            message: "Enter the name of the role you'd like to add"
+        }, 
+        {
+            type: "number",
+            name: "add_salary",
+            message: "Enter the salary for this role"
+        }, 
+        {
+            type: "list",
+            name: "add_dept",
+            message: "What department that this role belongs to?",
+            choices: dept_choice
+        },
+    ]).then(function(roleChoice) {
+        const query = `INSERT INTO roles (title, salary, department_id) VALUES ('${roleChoice.add_role}','${roleChoice.salary}', ${roleChoice.add_dept})`
+        db.query(query, function(err, res) {
+            console.log(`NEW ROLE ADDED! ${roleChoice.add_role}`)
+        });
+        init();
+    })
+}
+
 
 // Create a function to add an employee - addEmployee
 
