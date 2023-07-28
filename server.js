@@ -1,3 +1,4 @@
+// Packages needed for this application
 const express = require('express');
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
@@ -19,7 +20,7 @@ const db = mysql.createConnection(
         password: 'M1dge_6291181',
         database: 'employee_db'
     },
-    console.log('\x1b[7m', '--- You are connected to the employee_db database!!! ---')
+    console.log('\x1b[7m', '--- You are connected to the employee_db database! ---')
 );
 
 // Default response for any other request (Not Found)
@@ -31,6 +32,7 @@ app.listen(PORT, () => {
     console.log(`Server running on port: ${PORT}`);
 });
 
+// Prompt user choice
 init();
 
     function init() {
@@ -51,7 +53,7 @@ init();
         ]
     })
 
-//create and call a function to give answers, should include if else statements    
+// Function to call tables from the employee database    
     .then(function(answers) {
         console.log(answers);
         if (answers.options === "View all departments") {
@@ -82,18 +84,14 @@ init();
             console.log("\x1b[41m%s\x1b[1m", "YOU ARE UPDATING AN EMPLOYEE'S ROLE!");
             updateRole();
         }
-    
-    })
-    
+    })   
 };
 
-/* Query database example
-db.query('SELECT * FROM department', function (err, results) {
-    console.log(results);
-}); */
 
-// Create function to view all departments - viewDepts
+/* THE FOLLOWING FUNCTIONS ARE USED TO CALL ON AND RUN QUERIES FROM TABLES IN THE EMPLOYEE DATABASE TO RETURN SPECIFIC DATA */
 
+
+// View all departments
 function viewDepts() {
     db.query('SELECT * FROM department', function (err, results) {
         console.table(results);
@@ -102,8 +100,7 @@ function viewDepts() {
     });
 }
 
-// Creat function to view all roles - viewRoles
-
+// View all roles
 function viewRoles() {
     db.query('SELECT * FROM roles INNER JOIN department ON roles.id = department.id', function (err, results) {
         console.table(results);
@@ -112,8 +109,7 @@ function viewRoles() {
     });
 }
 
-// Create function to view all employees - viewEmployees
-
+// View all employees
 function viewEmployees() {
     db.query('SELECT employees.id, employees.first_name, employees.last_name, employees.roles_id, employees.manager_id, roles.title, roles.salary, roles.id, department.id FROM employees LEFT JOIN roles ON employees.roles_id = roles.id LEFT JOIN department ON roles.department_id = department.id', function (err, results) {
         console.table(results);
@@ -122,8 +118,7 @@ function viewEmployees() {
     });
 }
 
-// Create function to add a department - addDept
-
+// Add a department
 function addDept() {
     inquirer.prompt([
     {
@@ -136,12 +131,12 @@ function addDept() {
         db.query(query, function(err, res) {
         console.log('\x1b[41m%s\x1b[1m',`NEW DEPARTMENT ADDED! ${deptChoice.add_dept}`)
         });
+        // start again
         init();
     });
     };
 
-// Create function to add a role - addRole
-
+// Add a role
 function addRole() {
     const dept_choice = [];
     db.query('SELECT department_name FROM department', function (err, data) {
@@ -176,12 +171,12 @@ function addRole() {
         db.query(query, function(err, res) {
             console.log('\x1b[41m%s\x1b[1m', `NEW ROLE ADDED! ${roleChoice.add_role}`)
         });
+        // start again
         init();
     })
 }
 
-// Create a function to add an employee - addEmployee
-
+// Add an employee
 function addEmployee() {
     const role_choice = [];
     db.query('SELECT title FROM roles', function (err, data) {
@@ -233,20 +228,35 @@ function addEmployee() {
         db.query(query, function(err, res) {
             console.log('\x1b[41m%s\x1b[1m', `NEW EMPLOYEE ADDED! ${employee.first} ${employee.last}`)
         });
+        // start again
         init();
     })
 }
 
-// Create a function to update an employee role - updateRole
-/* I am prompted to select an employee to update and their new role and this information is updated 
-in the database 
- */
+// Update an employee role
 
 function updateRole() {
+    const employeeList = [];
+    db.query('SELECT first_name, last_name FROM employees', function (err, data) {
+        if (err) {
+            console.error(err);
+        } else {
+            data.forEach((row) => {
+                employeeList.push(row.first_name + row.last_name);
+            })
+        }
+    });
 
-    //call employee list from db
-
-    //call role list from db
+    const roleList = [];
+    db.query('SELECT title FROM roles', function (err, data) {
+        if (err) {
+            console.error(err);
+        } else {
+            data.forEach((row) => {
+                roleList.push(row.title);
+            })
+        }
+    });
 
     db.query('SELECT * FROM employees', function (err, data) {
         if (err) throw (err);
@@ -266,21 +276,12 @@ function updateRole() {
                 choices: roleList
             }
         ]).then(function(update) {
-            const query = 'UPDATE employees SET role_id WHERE '
+            const query = 'UPDATE employees SET role_id  = ${update.roleList} WHERE id = ${update.name}'
+            db.query(query, function(err, res) {
+                console.log('\x1b[41m%s\x1b[1m', `YOU'VE UPDATED AN EMPLOYEE'S ROLE! ${update.name}`)
+            });
+            // start again
+            init();
         })
     })
-
 }
-
-
-/*
-    ]).then(function(employee) {
-        const query = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${employee.first}','${employee.last}', '${employee.role}', '${employee.manager}')`
-        db.query(query, function(err, res) {
-            console.log('\x1b[41m%s\x1b[1m', `NEW EMPLOYEE ADDED! ${employee.first} ${employee.last}`)
-        });
-        init();
-    })
-}
-*/
-    
