@@ -60,6 +60,9 @@ init();
           else if (answers.options === "View all roles") {
             viewRoles();
           }
+          else if (answers.options === "View all employees") {
+            viewEmployees();
+          }
     
     })
     
@@ -95,11 +98,34 @@ function viewRoles() {
         init();
     });
 }
-//job title, role id, the department that role belongs to, .......and the salary for that role
-
-
 
 // Create function to view all employees - viewEmployees
+/*employee ids, first names, last names, 
+-----job titles, departments, salaries, 
+and managers that the employees report to 
+
+CREATE TABLE employees (
+    id int auto_increment primary key, - yes
+    first_name varchar(100) not null, - yes
+    last_name varchar(100) not null, - yes
+    roles_id int not null, 
+    manager_id int null,
+    foreign key (roles_id) references roles(id),
+    foreign key (manager_id) references employees(id),
+    on delete set null*/
+
+function viewEmployees() {
+    db.query('SELECT employees.id, employees.first_name, employees.last_name, employees.roles_id, employees.manager_id, roles.title, roles.salary, roles.id, department.id FROM employees LEFT JOIN roles ON employees.roles_id = roles.id LEFT JOIN department ON roles.department_id = department.id', function (err, results) {
+        console.table(results);
+        // start again
+        init();
+    });
+}
+
+//SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
+//FROM ((Orders
+//INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+//INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
 
 // Create function to add a department - addDept
 
