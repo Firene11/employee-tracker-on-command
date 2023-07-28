@@ -30,14 +30,14 @@ VALUES
 
   ('Robert', 'Johnson', 1, NULL),
   ('Jim', 'Morrison', 1, NULL),
-  ('Ron', 'McKernan', 2, 1),
+  ('Ron', 'McKernan', 2, NULL),
   ('Amy', 'Whinehouse', 2, 2),
-  ('Richey', 'Edwards', 3, 1),
+  ('Richey', 'Edwards', 3, NULL),
   ('Janis', 'Joplin', 3, 3),
   ('Brian', 'Jones', 4, 2),
   ('Kristen', 'Pfaff', 4, 2),
-  ('Pete', 'Ham', 5, 1),
+  ('Pete', 'Ham', 5, NULL),
   ('Jimi', 'Hendrix', 5, 2),
   ('Jonathan', 'Brandis', 6, 3),
   ('Kurt', 'Cobain', 6, 1),
-  ('Anton', 'Yelchin', 3, 2);
+  ('Anton', 'Yelchin', 3, NULL);
