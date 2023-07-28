@@ -139,12 +139,13 @@ function addDept() {
 // Add a role
 function addRole() {
     const dept_choice = [];
-    db.query('SELECT department_name FROM department', function (err, data) {
+    db.query('SELECT * FROM department', function (err, data) {
         if (err) {
             console.error(err);
         } else {
             data.forEach((row) => {
-                dept_choice.push(row.department_name);
+                dept_choice.push({value: row.department_name,
+                    key: row.id });
             })
         }
     });
@@ -167,9 +168,15 @@ function addRole() {
             choices: dept_choice
         },
     ]).then(function(roleChoice) {
-        const query = `INSERT INTO roles (title, salary, department_id) VALUES ('${roleChoice.add_role}', '${roleChoice.add_salary}', '${roleChoice.add_dept}')`
+        var deptID ;
+        for (let i = 0; i < dept_choice.length; i++) {
+            if (roleChoice.add_dept == dept_choice[i].value) {
+                deptID = dept_choice[i].key 
+            }
+        }
+        const query = `INSERT INTO roles (title, salary, department_id) VALUES ('${roleChoice.add_role}', '${roleChoice.add_salary}', '${deptID}')`
         db.query(query, function(err, res) {
-            console.log('\x1b[41m%s\x1b[1m', `NEW ROLE ADDED! ${roleChoice.add_role}`)
+            console.log('\x1b[41m%s\x1b[1m', `NEW ROLE ADDED! ${roleChoice.add_role}`);
         });
         // start again
         init();
