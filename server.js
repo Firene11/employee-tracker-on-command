@@ -184,7 +184,9 @@ function addEmployee() {
             console.error(err);
         } else {
             data.forEach((row) => {
-                role_choice.push(row.title + row.id);
+                role_choice.push ({value: row.title,
+                    key: row.id
+                });
             })
         }
     });
@@ -195,7 +197,8 @@ function addEmployee() {
             console.error(err);
         } else {
             data.forEach((row) => {
-                manager_choice.push(row.manager_id + row.first_name + row.last_name);
+                manager_choice.push({value: row.first_name + ', ' + row.last_name, 
+                    key: row.id })
             })
         }
     });
@@ -224,9 +227,22 @@ function addEmployee() {
             choices: manager_choice
         }
     ]).then(function(employee) {
-        const query = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${employee.first}', '${employee.last}', '${employee.role}', '${employee.manager}')`
+        var roleID ;
+        for (let i = 0; i < role_choice.length; i++) {
+            if (employee.role == role_choice[i]) {
+                roleID = role_choice[i].key 
+            }
+        }
+        var manID ;
+        for (let i = 0; i < manager_choice.length; i++) {
+            if (employee.manager == manager_choice[i]) {
+                manID = manager_choice[i].key 
+            }
+        }
+        const query = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${employee.first}', '${employee.last}', '${roleID}', '${manID}')`
         db.query(query, function(err, res) {
             console.log('\x1b[41m%s\x1b[1m', `NEW EMPLOYEE ADDED! ${employee.first} ${employee.last} ${employee.role} ${employee.manager}`)
+            console.log(err);
         });
         // start again
         init();
