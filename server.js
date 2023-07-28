@@ -56,13 +56,21 @@ init();
         console.log(answers);
         if (answers.options === "View all departments") {
             viewDepts();
-          }
-          else if (answers.options === "View all roles") {
+            console.log("\x1b[32m%s\x1b[1m", "YOU ARE VIEWING ALL DEPARTMENTS!");
+        }
+        else if (answers.options === "View all roles") {
             viewRoles();
-          }
-          else if (answers.options === "View all employees") {
+            console.log("\x1b[32m%s\x1b[1m", "YOU ARE VIEWING ALL ROLES!");
+        }
+        else if (answers.options === "View all employees") {
             viewEmployees();
-          }
+            console.log("\x1b[32m%s\x1b[1m", "YOU ARE VIEWING ALL EMPLOYEES!");
+        }
+        else if (answers.options === "Add a department") {
+            console.log("\x1b[41m%s\x1b[1m", "YOU ARE ADDING A DEPARTMENT!");
+            addDept();
+            
+        }
     
     })
     
@@ -85,12 +93,6 @@ function viewDepts() {
 
 // Creat function to view all roles - viewRoles
 
-/* SELECT column_name(s)
-FROM table1
-INNER JOIN table2
-ON table1.column_name = table2.column_name; 
-*/
-
 function viewRoles() {
     db.query('SELECT * FROM roles INNER JOIN department ON roles.id = department.id', function (err, results) {
         console.table(results);
@@ -100,19 +102,6 @@ function viewRoles() {
 }
 
 // Create function to view all employees - viewEmployees
-/*employee ids, first names, last names, 
------job titles, departments, salaries, 
-and managers that the employees report to 
-
-CREATE TABLE employees (
-    id int auto_increment primary key, - yes
-    first_name varchar(100) not null, - yes
-    last_name varchar(100) not null, - yes
-    roles_id int not null, 
-    manager_id int null,
-    foreign key (roles_id) references roles(id),
-    foreign key (manager_id) references employees(id),
-    on delete set null*/
 
 function viewEmployees() {
     db.query('SELECT employees.id, employees.first_name, employees.last_name, employees.roles_id, employees.manager_id, roles.title, roles.salary, roles.id, department.id FROM employees LEFT JOIN roles ON employees.roles_id = roles.id LEFT JOIN department ON roles.department_id = department.id', function (err, results) {
@@ -122,12 +111,41 @@ function viewEmployees() {
     });
 }
 
-//SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
-//FROM ((Orders
-//INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
-//INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
-
 // Create function to add a department - addDept
+/* WHEN I choose to add a department THEN I am prompted to enter the name of the department 
+and that department is added to the database
+ */
+
+function addDept() {
+    inquirer.prompt([
+    {
+        type: "input",
+        name: "add_dept",
+        message: "Enter the name of the department:"
+    }
+    ]).then(function(deptChoice) {
+        const query = `INSERT INTO department (department_name) VALUES ('${deptChoice.add_dept}')`;
+        db.query(query, function(err, res) {
+        console.log(`NEW DEPARTMENT ADDED! ${answer.add_dept}-------`)
+        });
+        init();
+    });
+    };
+
+    /*app.post('/add_department', (req, res) => {
+  const departmentName = req.body.department_name;
+
+  const sql = 'INSERT INTO departments (department_name) VALUES (?)';
+  connection.query(sql, [departmentName], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error adding the department.');
+    } else {
+      console.log('Department added successfully!');
+      res.send('Department added successfully!');
+    }
+  });
+}); */
 
 // Create function to add a role - addRole
 
