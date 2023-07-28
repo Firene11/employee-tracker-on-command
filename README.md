@@ -32,15 +32,15 @@ Choose an option from the list to view specific information from the employee da
 
 ## Screenshots
 
-![Application](images/sc1.jpg) 
-![Application](images/sc2.jpg) 
-![Application](images/sc3.jpg) 
-![Application](images/sc4.jpg) 
-![Application](images/sc5.jpg) 
-![Application](images/sc6.jpg) 
-![Application](images/sc7.jpg) 
-![Application](images/sc8.jpg) 
-![Application](images/sc9.jpg) 
+![Application](Images/sc1.jpg) 
+![Application](Images/sc2.jpg) 
+![Application](Images/sc3.jpg) 
+![Application](Images/sc4.jpg) 
+![Application](Images/sc5.jpg) 
+![Application](Images/sc6.jpg) 
+![Application](Images/sc7.jpg) 
+![Application](Images/sc8.jpg) 
+![Application](Images/sc9.jpg) 
 
 
 
