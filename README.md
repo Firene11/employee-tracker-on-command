@@ -31,9 +31,16 @@ Choose an option from the list to view specific information from the employee da
 [Link to Video](https://drive.google.com/file/d/14Oaowj3uehFyVMunK8R03o3p-Jemd3tI/view)
 
 ## Screenshots
-Application
 
-![Application](images/example.jpg) 
+![Application](images/sc1.jpg) 
+![Application](images/sc2.jpg) 
+![Application](images/sc3.jpg) 
+![Application](images/sc4.jpg) 
+![Application](images/sc5.jpg) 
+![Application](images/sc6.jpg) 
+![Application](images/sc7.jpg) 
+![Application](images/sc8.jpg) 
+![Application](images/sc9.jpg) 
 
 
 
