@@ -74,6 +74,10 @@ init();
             console.log("\x1b[41m%s\x1b[1m", "YOU ARE ADDING A ROLE!");
             addRole();
         }
+        else if  (answers.options === "Add an employee") {
+            console.log("\x1b[41m%s\x1b[1m", "YOU ARE ADDING AN EMPLOYEE!");
+            addEmployee();
+        }
     
     })
     
@@ -126,15 +130,13 @@ function addDept() {
     ]).then(function(deptChoice) {
         const query = `INSERT INTO department (department_name) VALUES ('${deptChoice.add_dept}')`;
         db.query(query, function(err, res) {
-        console.log(`NEW DEPARTMENT ADDED! ${deptChoice.add_dept}`)
+        console.log('\x1b[41m%s\x1b[1m',`NEW DEPARTMENT ADDED! ${deptChoice.add_dept}`)
         });
         init();
     });
     };
 
 // Create function to add a role - addRole
-/* enter the name, salary, and department for the role and that role is added to the database
-*/
 
 function addRole() {
     const dept_choice = [];
@@ -166,16 +168,74 @@ function addRole() {
             choices: dept_choice
         },
     ]).then(function(roleChoice) {
-        const query = `INSERT INTO roles (title, salary, department_id) VALUES ('${roleChoice.add_role}','${roleChoice.salary}', ${roleChoice.add_dept})`
+        const query = `INSERT INTO roles (title, salary, department_id) VALUES ('${roleChoice.add_role}','${roleChoice.add_salary}', '${roleChoice.add_dept}')`
         db.query(query, function(err, res) {
-            console.log(`NEW ROLE ADDED! ${roleChoice.add_role}`)
+            console.log('\x1b[41m%s\x1b[1m', `NEW ROLE ADDED! ${roleChoice.add_role}`)
         });
         init();
     })
 }
 
-
 // Create a function to add an employee - addEmployee
+/*WHEN I choose to add an employee
+THEN I am prompted to enter the employee’s first name, last name, role, and manager, 
+and that employee is added to the database
+ */
+
+function addEmployee() {
+    const role_choice = [];
+    db.query('SELECT title FROM roles', function (err, data) {
+        if (err) {
+            console.error(err);
+        } else {
+            data.forEach((row) => {
+                role_choice.push(row.title);
+            })
+        }
+    });
+
+    const manager_choice = [];
+    db.query('SELECT * FROM employees WHERE manager_id IS NOT NULL', function (err, data) {
+        if (err) {
+            console.error(err);
+        } else {
+            data.forEach((row) => {
+                manager_choice.push(row.manager_id + row.first_name + row.last_name);
+            })
+        }
+    });
+
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "first",
+            message: "Enter the employee's first name"
+        }, 
+        {
+            type: "input",
+            name: "last",
+            message: "Enter the employee's last name"
+        }, 
+        {
+            type: "list",
+            name: "role",
+            message: "What is the employee's role",
+            choices: role_choice
+        },
+        {
+            type: "list",
+            name: "manager",
+            message: "Who is the employee's manager?",
+            choices: manager_choice
+        }
+    ]).then(function(employee) {
+        const query = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${employee.first}','${employee.last}', '${employee.role}', '${employee.manager}')`
+        db.query(query, function(err, res) {
+            console.log('\x1b[41m%s\x1b[1m', `NEW EMPLOYEE ADDED! ${employee.first} ${employee.last}`)
+        });
+        init();
+    })
+}
 
 // Create a function to update an employee role - updateRole
 
