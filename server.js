@@ -167,7 +167,7 @@ function addRole() {
             choices: dept_choice
         },
     ]).then(function(roleChoice) {
-        const query = `INSERT INTO roles (title, salary, department_id) VALUES ('${roleChoice.add_role}','${roleChoice.add_salary}', '${roleChoice.add_dept}')`
+        const query = `INSERT INTO roles (title, salary, department_id) VALUES ('${roleChoice.add_role}', '${roleChoice.add_salary}', '${roleChoice.add_dept}')`
         db.query(query, function(err, res) {
             console.log('\x1b[41m%s\x1b[1m', `NEW ROLE ADDED! ${roleChoice.add_role}`)
         });
@@ -179,12 +179,12 @@ function addRole() {
 // Add an employee
 function addEmployee() {
     const role_choice = [];
-    db.query('SELECT title FROM roles', function (err, data) {
+    db.query('SELECT * FROM roles', function (err, data) {
         if (err) {
             console.error(err);
         } else {
             data.forEach((row) => {
-                role_choice.push(row.title);
+                role_choice.push(row.title + row.id);
             })
         }
     });
@@ -224,7 +224,7 @@ function addEmployee() {
             choices: manager_choice
         }
     ]).then(function(employee) {
-        const query = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${employee.first}','${employee.last}', '${employee.role}', '${employee.manager}')`
+        const query = `INSERT INTO employees (first_name, last_name, roles_id, manager_id) VALUES ('${employee.first}', '${employee.last}', '${employee.role}', '${employee.manager}')`
         db.query(query, function(err, res) {
             console.log('\x1b[41m%s\x1b[1m', `NEW EMPLOYEE ADDED! ${employee.first} ${employee.last}`)
         });
